@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Deeksha Dahiya">
+  <meta name="description" content="Ink & Elsewhere Club Room — Weekly reading schedules, 25-minute reading sprints, trivia challenges, and chapter discussions.">
+  <title>Ink &amp; Elsewhere | Club Room</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+
+  <!-- Soft Blurred Floral Background Glows -->
+  <div class="floral-aura aura-top-left" aria-hidden="true"></div>
+  <div class="floral-aura aura-top-right" aria-hidden="true"></div>
+  <div class="floral-aura aura-bottom" aria-hidden="true"></div>
+  <div class="flower-watermark flower-left" aria-hidden="true">✿</div>
+  <div class="flower-watermark flower-right" aria-hidden="true">❀</div>
+
+  <!-- Shared Floating Pill Navigation Bar -->
+  <header>
+    <nav class="nav" aria-label="Primary Navigation">
+      <div class="logo">✿ Ink &amp; <span>Elsewhere</span></div>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Discover</a></li>
+        <li><a href="club.html" class="active">Club Room</a></li>
+        <li><a href="profile.html">My Profile</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <span class="user-pill" id="active-user-badge">Reader: Tanzil</span>
+        <span class="nav-status">🔔 Clubs: <strong id="club-count">0</strong></span>
+        <button type="button" id="theme-toggle" class="theme-btn" onclick="toggleTheme()" title="Switch Light / Dark Mode">🌙</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Club Room Content -->
+  <main>
+    <!-- Hero Banner -->
+    <section class="hero">
+      <div>
+        <h1>The Reading Room</h1>
+        <p>Gather with fellow readers for live sprints, weekly chapter discussions, and literary trivia.</p>
+      </div>
+    </section>
+
+    <!-- Weekly Reading Circle Timetable (Semantic Table with colspan & rowspan) -->
+    <section class="card-section">
+      <h2>Weekly Reading Circle Schedule</h2>
+      <p class="section-sub">Drop into any live session below — all times in IST.</p>
+
+      <div class="table-wrapper">
+        <table class="schedule-table">
+          <caption>Ink &amp; Elsewhere — Live Club Sessions &amp; Activities</caption>
+          <thead>
+            <tr>
+              <th rowspan="2">Day</th>
+              <th colspan="2">Evening Session Blocks</th>
+              <th rowspan="2">Host / Lead</th>
+            </tr>
+            <tr>
+              <th>6:00 PM – 6:30 PM</th>
+              <th>6:30 PM – 7:15 PM</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monday</strong></td>
+              <td>25-Min Silent Reading Sprint</td>
+              <td>Sci-Fi &amp; Fantasy Chapter Check-In</td>
+              <td>Tanzil</td>
+            </tr>
+            <tr>
+              <td><strong>Wednesday</strong></td>
+              <td>25-Min Silent Reading Sprint</td>
+              <td>Classics &amp; Character Deep-Dive</td>
+              <td>Mitakshi Pangariya</td>
+            </tr>
+            <tr>
+              <td><strong>Friday</strong></td>
+              <td colspan="2">Weekend Chapter Trivia Challenge &amp; Open Book Recommendations</td>
+              <td>Deeksha Dahiya</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4">Tip: Use the Reading Sprint Timer and Chapter Trivia widgets below anytime between live meetups!</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- Two-Column Interactive Activities: Sprint Timer + Chapter Trivia Quiz -->
+    <div class="club-activities-grid">
+      
+      <!-- Activity 1: 25-Minute Silent Reading Sprint Timer -->
+      <section class="card-section activity-card">
+        <h2>⏱️ 25-Minute Reading Sprint</h2>
+        <p class="section-sub">Settle in with your current chapter. Complete a sprint to log activity on your profile.</p>
+
+        <div class="timer-display" id="timer-display">25:00</div>
+
+        <div class="timer-controls">
+          <button type="button" class="join-btn" onclick="startTimer()">Start Sprint</button>
+          <button type="button" class="secondary-btn" onclick="pauseTimer()">Pause</button>
+          <button type="button" class="clear-btn" onclick="resetTimer()">Reset</button>
+        </div>
+        <p id="timer-status" class="status-note">Ready when you are.</p>
+      </section>
+
+      <!-- Activity 2: Weekly Literary & Web Trivia Quiz -->
+      <section class="card-section activity-card">
+        <h2>✨ Weekly Chapter &amp; Literary Quiz</h2>
+        <p class="section-sub">Test your book knowledge and earn a badge alert in your activity feed.</p>
+
+        <form id="club-quiz-form" onsubmit="gradeQuiz(event)">
+          <fieldset class="quiz-fieldset">
+            <legend>1. Which desert planet is the setting of Frank Herbert's <cite>Dune</cite>?</legend>
+            <label><input type="radio" name="q1" value="a" required> Arrakis</label>
+            <label><input type="radio" name="q1" value="b"> Westeros</label>
+            <label><input type="radio" name="q1" value="c"> Narnia</label>
+          </fieldset>
+
+          <fieldset class="quiz-fieldset">
+            <legend>2. Who wrote the classic novel <cite>Little Women</cite>?</legend>
+            <label><input type="radio" name="q2" value="a" required> Jane Austen</label>
+            <label><input type="radio" name="q2" value="b"> Louisa May Alcott</label>
+            <label><input type="radio" name="q2" value="c"> Harper Lee</label>
+          </fieldset>
+
+          <fieldset class="quiz-fieldset">
+            <legend>3. In HTML5, which semantic tag is specifically used to cite a creative work's title?</legend>
+            <label><input type="radio" name="q3" value="a" required> <code>&lt;address&gt;</code></label>
+            <label><input type="radio" name="q3" value="b"> <code>&lt;cite&gt;</code></label>
+            <label><input type="radio" name="q3" value="c"> <code>&lt;nav&gt;</code></label>
+          </fieldset>
+
+          <button type="submit" class="join-btn">Check My Score</button>
+        </form>
+        <p id="quiz-result" class="status-note"></p>
+      </section>
+    </div>
+
+    <!-- Discussion & Chapter Review Section -->
+    <div class="dashboard">
+      <!-- Left: Live Member Reviews & Reflections -->
+      <section class="card-section">
+        <h2>Chapter Reflections &amp; Reviews</h2>
+        <p class="section-sub">Read thoughts from fellow club members or post your own note on the right.</p>
+
+        <div id="discussion-feed" class="discussion-list">
+          <article class="review-card">
+            <div class="review-meta">
+              <strong>Mitakshi Pangariya</strong> • <cite>Little Women</cite> (Chapter 4) • <span>★★★★★</span>
+            </div>
+            <blockquote>
+              <q>Jo March's determination to write despite every obstacle makes this chapter timeless.</q>
+            </blockquote>
+          </article>
+
+          <article class="review-card">
+            <div class="review-meta">
+              <strong>Deeksha Dahiya</strong> • <cite>The Night Circus</cite> (Chapter 9) • <span>★★★★★</span>
+            </div>
+            <blockquote>
+              <q>The monochrome tents and clockwork imagery feel like stepping straight into a dream.</q>
+            </blockquote>
+          </article>
+        </div>
+      </section>
+
+      <!-- Right: Post a New Review / Feedback Form -->
+      <aside class="activity-panel">
+        <h2>Post a Chapter Note</h2>
+        <form id="review-form" class="stacked-form" onsubmit="postReview(event)">
+          <div class="form-group">
+            <label for="club-topic">Select Book *</label>
+            <select id="club-topic" required>
+              <option value="Dune">Dune</option>
+              <option value="Little Women">Little Women</option>
+              <option value="The Night Circus">The Night Circus</option>
+              <option value="Atomic Habits">Atomic Habits</option>
+              <option value="To Kill a Mockingbird">To Kill a Mockingbird</option>
+              <option value="The Catcher in the Rye">The Catcher in the Rye</option>
+              <option value="HTML5 Black Book">HTML5 Black Book</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="chapter-num">Chapter # *</label>
+              <input type="number" id="chapter-num" min="1" max="100" placeholder="e.g., 5" required>
+            </div>
+            <div class="form-group">
+              <label for="rating">Rating *</label>
+              <select id="rating" required>
+                <option value="★★★★★">★★★★★ (5/5)</option>
+                <option value="★★★★☆">★★★★☆ (4/5)</option>
+                <option value="★★★☆☆">★★★☆☆ (3/5)</option>
+                <option value="★★☆☆☆">★★☆☆☆ (2/5)</option>
+                <option value="★☆☆☆☆">★☆☆☆☆ (1/5)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="comment-text">Your Reflection *</label>
+            <textarea id="comment-text" rows="4" minlength="10" placeholder="Share a favorite quote or thought from this chapter..." required></textarea>
+          </div>
+
+          <button type="submit" class="join-btn">Post Reflection</button>
+        </form>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="site-footer">
+    <p><strong>Ink &amp; Elsewhere</strong> — <em>Where stories find their people.</em></p>
+    <address>
+      Built by Tanzil, Mitakshi Pangariya &amp; Deeksha Dahiya • Contact:
+      <a href="mailto:hello@inkandelsewhere.club">hello@inkandelsewhere.club</a>
+    </address>
+  </footer>
+
+</body>
+</html>
