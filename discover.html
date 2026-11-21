@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Mitakshi Pangariya">
+  <meta name="description" content="Ink & Elsewhere — Where stories find their people. Discover collaborative book clubs, learning circles, and reading discussions.">
+  <title>Ink &amp; Elsewhere | Discover Book Clubs</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+
+  <!-- Soft Blurred Floral Background Glows -->
+  <div class="floral-aura aura-top-left" aria-hidden="true"></div>
+  <div class="floral-aura aura-top-right" aria-hidden="true"></div>
+  <div class="floral-aura aura-bottom" aria-hidden="true"></div>
+  <div class="flower-watermark flower-left" aria-hidden="true">✿</div>
+  <div class="flower-watermark flower-right" aria-hidden="true">❀</div>
+
+  <!-- Shared Floating Pill Navigation Bar -->
+  <header>
+    <nav class="nav" aria-label="Primary Navigation">
+      <div class="logo">✿ Ink &amp; <span>Elsewhere</span></div>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Discover</a></li>
+        <li><a href="club.html">Club Room</a></li>
+        <li><a href="profile.html">My Profile</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <span class="user-pill" id="active-user-badge">Reader: Tanzil</span>
+        <span class="nav-status">🔔 Clubs: <strong id="club-count">0</strong></span>
+        <button type="button" id="theme-toggle" class="theme-btn" onclick="toggleTheme()" title="Switch Light / Dark Mode">🌙</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Banner & Live Search / Genre Filter -->
+    <section class="hero">
+      <div>
+        <h1>Ink &amp; Elsewhere</h1>
+        <p>Where stories find their people — join a reading circle, share reflections, and grow chapter by chapter.</p>
+      </div>
