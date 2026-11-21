@@ -3,129 +3,295 @@
    Authors: Tanzil, Mitakshi Pangariya & Deeksha Dahiya
    ========================================================= */
 
-// 1. BOOK CONSTRUCTOR (Matches Unit IV Slide 52)
-function Book(id, title, author, year, genre, rating, cover) {
+// 1. BOOK CONSTRUCTOR
+function Book(id, title, author, clubName, genre, totalPages, rating, cover) {
   this.id = id;
   this.title = title;
   this.author = author;
-  this.year = year;
+  this.clubName = clubName;
   this.genre = genre;
+  this.totalPages = totalPages;
   this.rating = rating;
   this.cover = cover;
 }
 
-// 2. DEFAULT STARTER CATALOG (Includes Lecture Slide Books + Classics/Fiction)
-const defaultBooks = [
-  new Book(1, "Dune", "Frank Herbert", 1965, "Sci-Fi", "★★★★★", "https://covers.openlibrary.org/b/isbn/9780441172719-M.jpg"),
-  new Book(2, "Little Women", "Louisa May Alcott", 1868, "Classics", "★★★★★", "https://covers.openlibrary.org/b/isbn/9780147514011-M.jpg"),
-  new Book(3, "The Night Circus", "Erin Morgenstern", 2011, "Fantasy", "★★★★☆", "https://covers.openlibrary.org/b/isbn/9780307744432-M.jpg"),
-  new Book(4, "Atomic Habits", "James Clear", 2018, "Self-Growth", "★★★★★", "https://covers.openlibrary.org/b/isbn/9780735211292-M.jpg"),
-  new Book(5, "To Kill a Mockingbird", "Harper Lee", 1960, "Classics", "★★★★★", "https://covers.openlibrary.org/b/isbn/9780060935467-M.jpg"),
-  new Book(6, "The Catcher in the Rye", "J.D. Salinger", 1951, "Classics", "★★★★☆", "https://covers.openlibrary.org/b/isbn/9780316769488-M.jpg"),
-  new Book(7, "HTML5 Black Book", "Kogent Learning Solutions", 2016, "Academic / Web Tech", "★★★★★", "https://ui-avatars.com/api/?name=HTML5+Book&background=275992&color=FFFAED&size=150")
+// 2. THE 5 READING CIRCLES & PERSONALITY MAPPING
+const readingCircles = [
+  {
+    clubName: "The Arrakis Readers",
+    genre: "Sci-fi & Fantasy",
+    personality: "Adventurous",
+    tagline: "Epic worlds, deep space survival, and bold quests."
+  },
+  {
+    clubName: "The Austen Society",
+    genre: "Classics",
+    personality: "Intellectual",
+    tagline: "Timeless wit, human nature, and enduring literary masterpieces."
+  },
+  {
+    clubName: "The Midnight Readers",
+    genre: "Thriller & Gothic",
+    personality: "Mysterious",
+    tagline: "Psychological twists, haunting estates, and late-night suspense."
+  },
+  {
+    clubName: "The Quiet Chapters",
+    genre: "Contemporary Fiction",
+    personality: "Introspective",
+    tagline: "Emotionally rich stories about memory, identity, and second chances."
+  },
+  {
+    clubName: "The Myth & Margins",
+    genre: "Mythology & Historical",
+    personality: "Imaginative",
+    tagline: "Ancient legends retold and forgotten pages of history."
+  }
 ];
 
-// 3. PRE-LOADED TEAM READER PROFILES
-const defaultUsers = {
-  "Tanzil": {
-    name: "Tanzil",
-    bio: "Fantasy & sci-fi enthusiast exploring whimsical worlds.",
-    genre: "Fantasy & Sci-Fi",
-    progress: 35,
-    joinedClubs: [],
-    notifications: []
-  },
-  "Mitakshi Pangariya": {
-    name: "Mitakshi Pangariya",
-    bio: "Lover of timeless classics and cozy evening reads.",
-    genre: "Classics",
-    progress: 50,
-    joinedClubs: [],
-    notifications: []
-  },
-  "Deeksha Dahiya": {
-    name: "Deeksha Dahiya",
-    bio: "Always chasing mystery novels and late-night page-turners.",
-    genre: "Fantasy",
-    progress: 40,
-    joinedClubs: [],
-    notifications: []
-  }
-};
+// 3. ALL 20 CURATED BOOKS ACROSS THE 5 CLUBS
+const defaultBooks = [
+  // The Arrakis Readers — Sci-fi & Fantasy (Adventurous)
+  new Book(1, "Dune", "Frank Herbert", "The Arrakis Readers", "Sci-fi & Fantasy", 688, "★★★★★", "https://covers.openlibrary.org/b/isbn/9780441172719-M.jpg"),
+  new Book(2, "The Martian", "Andy Weir", "The Arrakis Readers", "Sci-fi & Fantasy", 387, "★★★★★", "https://covers.openlibrary.org/b/isbn/9780553418026-M.jpg"),
+  new Book(3, "The Hobbit", "J.R.R. Tolkien", "The Arrakis Readers", "Sci-fi & Fantasy", 310, "★★★★★", "https://covers.openlibrary.org/b/isbn/9780547928227-M.jpg"),
+  new Book(4, "Project Hail Mary", "Andy Weir", "The Arrakis Readers", "Sci-fi & Fantasy", 496, "★★★★★", "https://covers.openlibrary.org/b/isbn/9780593135204-M.jpg"),
 
-// 4. LOAD & SAVE STATE IN LOCALSTORAGE (Safe try/catch from Unit IV)
+  // The Austen Society — Classics (Intellectual)
+  new Book(5, "Pride and Prejudice", "Jane Austen", "The Austen Society", "Classics", 432, "★★★★★", "https://covers.openlibrary.org/b/isbn/9780141439518-M.jpg"),
+  new Book(6, "The Great Gatsby", "F. Scott Fitzgerald", "The Austen Society", "Classics", 180, "★★★★★", "https://covers.openlibrary.org/b/isbn/9780743273565-M.jpg"),
+  new Book(7, "The Metamorphosis", "Franz Kafka", "The Austen Society", "Classics", 96, "★★★★☆", "https://covers.openlibrary.org/b/isbn/9780553213690-M.jpg"),
+  new Book(8, "Little Women", "Louisa May Alcott", "The Austen Society", "Classics", 449, "★★★★★", "https://covers.openlibrary.org/b/isbn/9780147514011-M.jpg"),
+
+  // The Midnight Readers — Thriller & Gothic (Mysterious)
+  new Book(9, "Rebecca", "Daphne du Maurier", "The Midnight Readers", "Thriller & Gothic", 449, "★★★★★", "https://covers.openlibrary.org/b/isbn/9780380730407-M.jpg"),
+  new Book(10, "The Silent Patient", "Alex Michaelides", "The Midnight Readers", "Thriller & Gothic", 336, "★★★★☆", "https://covers.openlibrary.org/b/isbn/9781250301697-M.jpg"),
+  new Book(11, "The Picture of Dorian Gray", "Oscar Wilde", "The Midnight Readers", "Thriller & Gothic", 254, "★★★★★", "https://covers.openlibrary.org/b/isbn/9780141439570-M.jpg"),
+  new Book(12, "Gone Girl", "Gillian Flynn", "The Midnight Readers", "Thriller & Gothic", 432, "★★★★☆", "https://covers.openlibrary.org/b/isbn/9780307588371-M.jpg"),
+
+  // The Quiet Chapters — Contemporary Fiction (Introspective)
+  new Book(13, "Norwegian Wood", "Haruki Murakami", "The Quiet Chapters", "Contemporary Fiction", 296, "★★★★★", "https://covers.openlibrary.org/b/isbn/9780375704024-M.jpg"),
+  new Book(14, "The Perks of Being a Wallflower", "Stephen Chbosky", "The Quiet Chapters", "Contemporary Fiction", 213, "★★★★★", "https://covers.openlibrary.org/b/isbn/9781451696196-M.jpg"),
+  new Book(15, "A Little Life", "Hanya Yanagihara", "The Quiet Chapters", "Contemporary Fiction", 720, "★★★★★", "https://covers.openlibrary.org/b/isbn/9780804172707-M.jpg"),
+  new Book(16, "The Midnight Library", "Matt Haig", "The Quiet Chapters", "Contemporary Fiction", 304, "★★★★☆", "https://covers.openlibrary.org/b/isbn/9780525559474-M.jpg"),
+
+  // The Myth & Margins — Mythology & Historical (Imaginative)
+  new Book(17, "The Song of Achilles", "Madeline Miller", "The Myth & Margins", "Mythology & Historical", 378, "★★★★★", "https://covers.openlibrary.org/b/isbn/9780062060624-M.jpg"),
+  new Book(18, "Circe", "Madeline Miller", "The Myth & Margins", "Mythology & Historical", 393, "★★★★★", "https://covers.openlibrary.org/b/isbn/9780316556347-M.jpg"),
+  new Book(19, "The Book of Lost Names", "Kristin Harmel", "The Myth & Margins", "Mythology & Historical", 388, "★★★★☆", "https://covers.openlibrary.org/b/isbn/9781982131890-M.jpg"),
+  new Book(20, "The Palace of Illusions", "Chitra Banerjee Divakaruni", "The Myth & Margins", "Mythology & Historical", 360, "★★★★★", "https://covers.openlibrary.org/b/isbn/9781400096206-M.jpg")
+];
+
+const defaultScheduleTemplate = [
+  { day: "Monday", time: "7:00 PM – 7:30 PM", activity: "25-Min Silent Focus Sprint", mode: "Solo Timer" },
+  { day: "Wednesday", time: "7:30 PM – 8:15 PM", activity: "Chapter Check-In & Quotes", mode: "Club Discussion" },
+  { day: "Saturday", time: "5:00 PM – 5:45 PM", activity: "Weekly Bookworm Quiz & Reflection", mode: "Group Challenge" }
+];
+
+// 4. STATE MANAGEMENT (ZERO DEFAULT HARDCODED MEMBERS)
 let books = [];
 let users = {};
-let activeUserName = "Tanzil";
+let activeUserEmail = "";
+let reviews = [];
+let showOnlyRecommended = false;
 
 function loadAppState() {
   try {
-    const savedBooks = JSON.parse(localStorage.getItem("ink_books"));
+    const savedBooks = JSON.parse(localStorage.getItem("ink_books_v2"));
     books = Array.isArray(savedBooks) && savedBooks.length > 0 ? savedBooks : defaultBooks;
 
-    const savedUsers = JSON.parse(localStorage.getItem("ink_users"));
-    users = savedUsers && Object.keys(savedUsers).length > 0 ? savedUsers : defaultUsers;
+    const savedUsers = JSON.parse(localStorage.getItem("ink_users_v2"));
+    users = savedUsers && typeof savedUsers === "object" ? savedUsers : {};
 
-    const savedActive = localStorage.getItem("ink_active_user");
-    if (savedActive && users[savedActive]) {
-      activeUserName = savedActive;
-    }
-  } catch (error) {
+    activeUserEmail = localStorage.getItem("ink_active_email_v2") || "";
+
+    const savedReviews = JSON.parse(localStorage.getItem("ink_reviews_v2"));
+    reviews = Array.isArray(savedReviews) ? savedReviews : [];
+  } catch (err) {
     books = defaultBooks;
-    users = defaultUsers;
+    users = {};
+    activeUserEmail = "";
+    reviews = [];
   }
 }
 
 function saveAppState() {
-  localStorage.setItem("ink_books", JSON.stringify(books));
-  localStorage.setItem("ink_users", JSON.stringify(users));
-  localStorage.setItem("ink_active_user", activeUserName);
+  localStorage.setItem("ink_books_v2", JSON.stringify(books));
+  localStorage.setItem("ink_users_v2", JSON.stringify(users));
+  localStorage.setItem("ink_active_email_v2", activeUserEmail);
+  localStorage.setItem("ink_reviews_v2", JSON.stringify(reviews));
 }
 
 function getCurrentUser() {
-  return users[activeUserName] || users["Tanzil"];
+  return activeUserEmail && users[activeUserEmail] ? users[activeUserEmail] : null;
 }
 
-// 5. USER-RELEVANT NOTIFICATIONS
+// 5. AUTHENTICATION GUARD (Redirects unauthenticated visitors to login.html)
+function enforceAuthGuard() {
+  const isAuthPage = Boolean(document.getElementById("login-form"));
+  const currentUser = getCurrentUser();
+
+  if (!isAuthPage && !currentUser) {
+    window.location.replace("login.html");
+    return false;
+  }
+  if (isAuthPage && currentUser) {
+    window.location.replace("discover.html");
+    return false;
+  }
+  return true;
+}
+
+// 6. LOGIN.HTML — TAB SWITCHING, STRONG PASSWORD CHECK & REGISTRATION
+function switchAuthTab(tab) {
+  const loginForm = document.getElementById("login-form");
+  const regForm = document.getElementById("register-form");
+  const tabLogin = document.getElementById("tab-login");
+  const tabReg = document.getElementById("tab-register");
+  const msg = document.getElementById("auth-message");
+
+  if (!loginForm || !regForm) return;
+  if (msg) {
+    msg.textContent = "";
+    msg.classList.remove("success");
+  }
+
+  if (tab === "login") {
+    loginForm.classList.remove("hidden");
+    regForm.classList.add("hidden");
+    tabLogin.classList.add("active");
+    tabReg.classList.remove("active");
+  } else {
+    regForm.classList.remove("hidden");
+    loginForm.classList.add("hidden");
+    tabReg.classList.add("active");
+    tabLogin.classList.remove("active");
+  }
+}
+
+function isStrongPassword(password) {
+  const hasLetter = /[a-zA-Z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  const hasSpecial = /[^a-zA-Z0-9]/.test(password);
+  return password.length >= 6 && hasLetter && hasNumber && hasSpecial;
+}
+
+function handleRegister(event) {
+  event.preventDefault();
+  const name = document.getElementById("reg-name").value.trim();
+  const email = document.getElementById("reg-email").value.trim().toLowerCase();
+  const password = document.getElementById("reg-password").value;
+  const genre = document.getElementById("reg-vibe").value;
+  const bio = document.getElementById("reg-bio").value.trim();
+  const msg = document.getElementById("auth-message");
+
+  if (!isStrongPassword(password)) {
+    msg.classList.remove("success");
+    msg.textContent = "Password must be at least 6 characters and include letters, 1 number, and 1 special character (!@#$%^&*).";
+    return;
+  }
+
+  if (users[email]) {
+    msg.classList.remove("success");
+    msg.textContent = "An account with this email already exists. Please Sign In instead.";
+    return;
+  }
+
+  const matchedCircle = readingCircles.find(c => c.genre === genre) || readingCircles[0];
+
+  users[email] = {
+    name: name,
+    email: email,
+    password: password,
+    genre: genre,
+    personality: matchedCircle.personality,
+    recommendedClub: matchedCircle.clubName,
+    bio: bio || `${matchedCircle.personality} reader exploring ${genre}.`,
+    joinedClubs: [],
+    bookProgress: {},
+    schedule: JSON.parse(JSON.stringify(defaultScheduleTemplate)),
+    notifications: [
+      `Welcome ${name}! Matched with ${matchedCircle.clubName} (${matchedCircle.personality}).`
+    ]
+  };
+
+  activeUserEmail = email;
+  saveAppState();
+  window.location.href = "discover.html";
+}
+
+function handleLogin(event) {
+  event.preventDefault();
+  const identifier = document.getElementById("login-identifier").value.trim().toLowerCase();
+  const password = document.getElementById("login-password").value;
+  const msg = document.getElementById("auth-message");
+
+  const foundUser = Object.values(users).find(
+    u => u.email.toLowerCase() === identifier || u.name.toLowerCase() === identifier
+  );
+
+  if (!foundUser) {
+    msg.classList.remove("success");
+    msg.textContent = "No account found with that name or email. Please create an account first.";
+    return;
+  }
+
+  if (foundUser.password !== password) {
+    msg.classList.remove("success");
+    msg.textContent = "Incorrect password. Please try again.";
+    return;
+  }
+
+  activeUserEmail = foundUser.email;
+  saveAppState();
+  window.location.href = "discover.html";
+}
+
+function handleSignOut() {
+  activeUserEmail = "";
+  saveAppState();
+  window.location.href = "login.html";
+}
+
+// 7. SHARED NAVBAR, NOTIFICATIONS & DARK MODE
+function updateNavbar() {
+  const user = getCurrentUser();
+  if (!user) return;
+
+  const badge = document.getElementById("active-user-badge");
+  const count = document.getElementById("club-count");
+  if (badge) badge.textContent = `Reader: ${user.name}`;
+  if (count) count.textContent = user.joinedClubs.length;
+}
+
 function pushUserNotification(message) {
   const user = getCurrentUser();
+  if (!user) return;
   const time = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   user.notifications.unshift(`${message} (${time})`);
-  if (user.notifications.length > 10) {
-    user.notifications.pop();
-  }
+  if (user.notifications.length > 12) user.notifications.pop();
   saveAppState();
   renderNotifications();
 }
 
 function renderNotifications() {
   const feed = document.getElementById("activity-feed");
-  if (!feed) return;
-
   const user = getCurrentUser();
+  if (!feed || !user) return;
+
   if (user.notifications.length === 0) {
-    feed.innerHTML = `<li>No notifications yet for ${user.name}. Join a club or complete an activity!</li>`;
+    feed.innerHTML = `<li>No alerts yet for ${user.name}. Join one of the 5 reading circles to begin!</li>`;
     return;
   }
-
-  feed.innerHTML = user.notifications.map(note => `<li>${note}</li>`).join("");
+  feed.innerHTML = user.notifications.map(n => `<li>${n}</li>`).join("");
 }
 
 function clearNotifications() {
   const user = getCurrentUser();
+  if (!user) return;
   user.notifications = [];
   saveAppState();
   renderNotifications();
-}
-
-// 6. SHARED NAVBAR & DARK MODE ("MIDNIGHT WISTERIA")
-function updateNavbar() {
-  const user = getCurrentUser();
-  const badge = document.getElementById("active-user-badge");
-  const count = document.getElementById("club-count");
-
-  if (badge) badge.textContent = `Reader: ${user.name}`;
-  if (count) count.textContent = user.joinedClubs.length;
 }
 
 function applySavedTheme() {
@@ -141,48 +307,143 @@ function toggleTheme() {
   document.body.classList.toggle("dark-mode");
   const isDark = document.body.classList.contains("dark-mode");
   localStorage.setItem("ink_theme", isDark ? "dark" : "light");
-
   const btn = document.getElementById("theme-toggle");
   if (btn) btn.textContent = isDark ? "☀️" : "🌙";
 }
 
-// 7. INDEX.HTML — CATALOG RENDERING, SEARCH, JOIN CLUB & ADD BOOK
+// 8. DISCOVER.HTML — 5 CLUBS SHOWCASE, PERSONALITY MATCH & 20-BOOK CATALOG
+function initDiscoverPage() {
+  const showcase = document.getElementById("clubs-showcase");
+  const user = getCurrentUser();
+  if (!showcase || !user) return;
+
+  const matchedCircle = readingCircles.find(c => c.genre === user.genre) || readingCircles[0];
+  user.recommendedClub = matchedCircle.clubName;
+  user.personality = matchedCircle.personality;
+
+  const matchText = document.getElementById("matched-club-text");
+  if (matchText) {
+    matchText.innerHTML = `Because you chose <strong>${matchedCircle.personality} (${matchedCircle.genre})</strong>, we recommend <strong>${matchedCircle.clubName}</strong>!`;
+  }
+
+  renderClubsShowcase();
+  filterCatalog();
+}
+
+function renderClubsShowcase() {
+  const showcase = document.getElementById("clubs-showcase");
+  const user = getCurrentUser();
+  if (!showcase || !user) return;
+
+  showcase.innerHTML = readingCircles.map(circle => {
+    const isJoined = user.joinedClubs.includes(circle.clubName);
+    const isMatch = circle.genre === user.genre;
+    return `
+      <article class="club-pill-card ${isMatch ? "recommended-club" : ""}">
+        <div>
+          <span class="club-vibe-tag">${circle.personality} • ${circle.genre}</span>
+          <h3>${circle.clubName} ${isMatch ? "✨" : ""}</h3>
+          <p class="section-sub" style="margin-bottom:0;">${circle.tagline}</p>
+        </div>
+        <button type="button" class="${isJoined ? "join-btn joined" : "join-btn"}" onclick="toggleJoinClub('${circle.clubName.replace(/'/g, "\\'")}')">
+          ${isJoined ? "✓ Joined Circle" : "+ Join Circle"}
+        </button>
+      </article>
+    `;
+  }).join("");
+}
+
+function toggleRecommendedFilter() {
+  const user = getCurrentUser();
+  const genreSelect = document.getElementById("genre-select");
+  const btn = document.getElementById("toggle-match-btn");
+  if (!user || !genreSelect || !btn) return;
+
+  showOnlyRecommended = !showOnlyRecommended;
+  if (showOnlyRecommended) {
+    genreSelect.value = user.genre;
+    btn.textContent = "Show All 5 Clubs";
+  } else {
+    genreSelect.value = "All";
+    btn.textContent = "Show Only My Match";
+  }
+  filterCatalog();
+}
+
+function toggleJoinClub(clubName) {
+  const user = getCurrentUser();
+  if (!user) return;
+
+  const idx = user.joinedClubs.indexOf(clubName);
+  if (idx === -1) {
+    user.joinedClubs.push(clubName);
+    // Automatically add that club's books to user's multi-book progress shelf if not present
+    books.filter(b => b.clubName === clubName).forEach(b => {
+      if (!user.bookProgress[b.title]) {
+        user.bookProgress[b.title] = { pagesRead: 0, totalPages: b.totalPages || 300 };
+      }
+    });
+    pushUserNotification(`Joined "${clubName}" — its books are now ready in My Profile!`);
+  } else {
+    user.joinedClubs.splice(idx, 1);
+    pushUserNotification(`Left "${clubName}".`);
+  }
+
+  saveAppState();
+  updateNavbar();
+  renderClubsShowcase();
+  filterCatalog();
+}
+
 function renderCatalog(bookList) {
   const grid = document.getElementById("book-grid");
-  if (!grid) return;
-
   const user = getCurrentUser();
-  grid.innerHTML = "";
+  if (!grid || !user) return;
 
   if (bookList.length === 0) {
-    grid.innerHTML = `<p class="section-sub">No matching books found. Try another keyword or genre!</p>`;
+    grid.innerHTML = `<p class="section-sub">No matching books found. Try another keyword or club filter!</p>`;
     return;
   }
 
-  bookList.forEach(book => {
-    const isJoined = user.joinedClubs.includes(book.title);
-    const btnText = isJoined ? "✓ Joined Club" : "+ Join Club";
-    const btnClass = isJoined ? "join-btn joined" : "join-btn";
-
-    grid.innerHTML += `
+  grid.innerHTML = bookList.map(book => {
+    const isClubJoined = user.joinedClubs.includes(book.clubName);
+    const isTracked = Boolean(user.bookProgress[book.title]);
+    return `
       <article class="book-card">
         <div>
           <div class="card-top">
             <img src="${book.cover}" alt="${book.title} cover" class="book-cover">
             <div class="book-info">
               <h3><cite>${book.title}</cite></h3>
-              <p>${book.author} (${book.year})</p>
+              <p>${book.author}</p>
+              <p>${book.totalPages} pages</p>
               <div class="stars">${book.rating}</div>
             </div>
           </div>
-          <span class="genre-tag">${book.genre}</span>
+          <span class="genre-tag">${book.clubName}</span>
         </div>
-        <button type="button" class="${btnClass}" onclick="toggleJoinClub('${book.title.replace(/'/g, "\\'")}')">
-          ${btnText}
-        </button>
+        <div style="display:flex; flex-direction:column; gap:0.45rem;">
+          <button type="button" class="${isClubJoined ? "join-btn joined" : "join-btn"}" onclick="toggleJoinClub('${book.clubName.replace(/'/g, "\\'")}')">
+            ${isClubJoined ? `✓ In ${book.clubName}` : `+ Join ${book.clubName}`}
+          </button>
+          <button type="button" class="clear-btn" onclick="trackBookFromDiscover('${book.title.replace(/'/g, "\\'")}', ${book.totalPages})">
+            ${isTracked ? "📖 Tracking in Profile" : "+ Track Pages in Profile"}
+          </button>
+        </div>
       </article>
     `;
-  });
+  }).join("");
+}
+
+function trackBookFromDiscover(title, totalPages) {
+  const user = getCurrentUser();
+  if (!user) return;
+  if (!user.bookProgress[title]) {
+    user.bookProgress[title] = { pagesRead: 0, totalPages: totalPages || 300 };
+    saveAppState();
+    pushUserNotification(`Added "${title}" to your Profile page tracker.`);
+    filterCatalog();
+  }
 }
 
 function filterCatalog() {
@@ -194,7 +455,10 @@ function filterCatalog() {
   const genre = genreSelect.value;
 
   const filtered = books.filter(book => {
-    const matchesText = book.title.toLowerCase().includes(query) || book.author.toLowerCase().includes(query);
+    const matchesText =
+      book.title.toLowerCase().includes(query) ||
+      book.author.toLowerCase().includes(query) ||
+      book.clubName.toLowerCase().includes(query);
     const matchesGenre = genre === "All" || book.genre === genre;
     return matchesText && matchesGenre;
   });
@@ -202,88 +466,164 @@ function filterCatalog() {
   renderCatalog(filtered);
 }
 
-function toggleJoinClub(bookTitle) {
-  const user = getCurrentUser();
-  const index = user.joinedClubs.indexOf(bookTitle);
-
-  if (index === -1) {
-    user.joinedClubs.push(bookTitle);
-    pushUserNotification(`You joined the "${bookTitle}" reading circle.`);
-  } else {
-    user.joinedClubs.splice(index, 1);
-    pushUserNotification(`You left the "${bookTitle}" reading circle.`);
-  }
-
-  saveAppState();
-  updateNavbar();
-  filterCatalog();
-}
-
 function addNewBook(event) {
   event.preventDefault();
   const title = document.getElementById("new-title").value.trim();
   const author = document.getElementById("new-author").value.trim();
-  const year = Number(document.getElementById("new-year").value);
+  const totalPages = Number(document.getElementById("new-pages").value);
   const genre = document.getElementById("new-genre").value;
   const coverInput = document.getElementById("new-cover").value.trim();
 
+  const circle = readingCircles.find(c => c.genre === genre) || readingCircles[0];
   const cover = coverInput !== ""
     ? coverInput
     : `https://ui-avatars.com/api/?name=${encodeURIComponent(title)}&background=947EBF&color=FFFAED&size=150`;
 
-  const newBook = new Book(Date.now(), title, author, year, genre, "★★★★★", cover);
+  const newBook = new Book(Date.now(), title, author, circle.clubName, genre, totalPages, "★★★★★", cover);
   books.unshift(newBook);
   saveAppState();
 
-  pushUserNotification(`Added "${title}" to the Ink & Elsewhere catalog.`);
+  pushUserNotification(`Added "${title}" to ${circle.clubName}.`);
   event.target.reset();
   filterCatalog();
 }
 
-// 8. CLUB.HTML — 25-MINUTE SPRINT TIMER, TRIVIA QUIZ & REVIEWS
+// 9. CLUB.HTML — EDITABLE SCHEDULE, FULL-SCREEN POMODORO, QUIZ & REFLECTIONS
 let timerSeconds = 25 * 60;
 let timerInterval = null;
+let timerPaused = false;
 
-function updateTimerDisplay() {
-  const display = document.getElementById("timer-display");
-  if (!display) return;
-  const mins = String(Math.floor(timerSeconds / 60)).padStart(2, "0");
-  const secs = String(timerSeconds % 60).padStart(2, "0");
-  display.textContent = `${mins}:${secs}`;
+function formatTime(secs) {
+  const m = String(Math.floor(secs / 60)).padStart(2, "0");
+  const s = String(secs % 60).padStart(2, "0");
+  return `${m}:${s}`;
 }
 
-function startTimer() {
-  if (timerInterval !== null) return;
-  const status = document.getElementById("timer-status");
-  if (status) status.textContent = "Reading sprint in progress... stay focused!";
+function syncTimerDisplays() {
+  const formatted = formatTime(timerSeconds);
+  const compactEl = document.getElementById("compact-timer-display");
+  const fullEl = document.getElementById("fullscreen-timer-display");
+  if (compactEl) compactEl.textContent = formatted;
+  if (fullEl) fullEl.textContent = formatted;
+}
 
+function startFullScreenTimer() {
+  const overlay = document.getElementById("fullscreen-pomo-overlay");
+  const pauseBtn = document.getElementById("fs-pause-btn");
+  if (overlay) overlay.classList.remove("hidden");
+  timerPaused = false;
+  if (pauseBtn) pauseBtn.textContent = "Pause";
+
+  if (timerInterval !== null) return;
   timerInterval = setInterval(() => {
-    if (timerSeconds > 0) {
-      timerSeconds--;
-      updateTimerDisplay();
-    } else {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      if (status) status.textContent = "Sprint complete! Great job!";
-      pushUserNotification("Completed a 25-minute silent reading sprint!");
+    if (!timerPaused) {
+      if (timerSeconds > 0) {
+        timerSeconds--;
+        syncTimerDisplays();
+      } else {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        exitFullScreenTimer();
+        pushUserNotification("Completed a 25-minute full-screen reading sprint!");
+        alert("25-minute reading sprint complete! Great job!");
+      }
     }
   }, 1000);
 }
 
-function pauseTimer() {
+function togglePauseFullScreen() {
+  timerPaused = !timerPaused;
+  const pauseBtn = document.getElementById("fs-pause-btn");
+  if (pauseBtn) pauseBtn.textContent = timerPaused ? "Resume" : "Pause";
+}
+
+function exitFullScreenTimer() {
+  const overlay = document.getElementById("fullscreen-pomo-overlay");
+  if (overlay) overlay.classList.add("hidden");
   clearInterval(timerInterval);
   timerInterval = null;
-  const status = document.getElementById("timer-status");
-  if (status) status.textContent = "Sprint paused.";
 }
 
 function resetTimer() {
   clearInterval(timerInterval);
   timerInterval = null;
+  timerPaused = false;
   timerSeconds = 25 * 60;
-  updateTimerDisplay();
-  const status = document.getElementById("timer-status");
-  if (status) status.textContent = "Ready when you are.";
+  syncTimerDisplays();
+}
+
+function initClubPage() {
+  const tbody = document.getElementById("schedule-tbody");
+  const topicSelect = document.getElementById("club-topic");
+  const user = getCurrentUser();
+  if (!tbody || !user) return;
+
+  if (!Array.isArray(user.schedule)) {
+    user.schedule = JSON.parse(JSON.stringify(defaultScheduleTemplate));
+  }
+
+  renderScheduleTable();
+  renderReflections();
+
+  if (topicSelect) {
+    topicSelect.innerHTML = books
+      .map(b => `<option value="${b.title}">${b.title} (${b.clubName})</option>`)
+      .join("");
+  }
+}
+
+function renderScheduleTable() {
+  const tbody = document.getElementById("schedule-tbody");
+  const user = getCurrentUser();
+  if (!tbody || !user) return;
+
+  if (user.schedule.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5">No schedule slots yet. Add your custom reading plan above!</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = user.schedule.map((slot, index) => `
+    <tr>
+      <td><strong>${slot.day}</strong></td>
+      <td>${slot.time}</td>
+      <td>${slot.activity}</td>
+      <td><span class="genre-tag">${slot.mode}</span></td>
+      <td><button type="button" class="clear-btn" onclick="deleteScheduleSlot(${index})">Remove</button></td>
+    </tr>
+  `).join("");
+}
+
+function addScheduleSlot(event) {
+  event.preventDefault();
+  const user = getCurrentUser();
+  if (!user) return;
+
+  const day = document.getElementById("sched-day").value;
+  const time = document.getElementById("sched-time").value.trim();
+  const activity = document.getElementById("sched-activity").value.trim();
+  const mode = document.getElementById("sched-mode").value.trim();
+
+  user.schedule.push({ day, time, activity, mode });
+  saveAppState();
+  renderScheduleTable();
+  pushUserNotification(`Added ${day} reading slot: "${activity}".`);
+  event.target.reset();
+}
+
+function deleteScheduleSlot(index) {
+  const user = getCurrentUser();
+  if (!user) return;
+  user.schedule.splice(index, 1);
+  saveAppState();
+  renderScheduleTable();
+}
+
+function resetScheduleTemplate() {
+  const user = getCurrentUser();
+  if (!user) return;
+  user.schedule = JSON.parse(JSON.stringify(defaultScheduleTemplate));
+  saveAppState();
+  renderScheduleTable();
 }
 
 function gradeQuiz(event) {
@@ -293,124 +633,218 @@ function gradeQuiz(event) {
   const q3 = document.querySelector('input[name="q3"]:checked')?.value;
 
   let score = 0;
-  if (q1 === "a") score++;
-  if (q2 === "b") score++;
-  if (q3 === "b") score++;
+  if (q1 === "b") score++; // A Tale of Two Cities
+  if (q2 === "c") score++; // Dr. John Watson
+  if (q3 === "a") score++; // Mary Ann Evans
 
   const result = document.getElementById("quiz-result");
   if (result) {
-    result.textContent = `You scored ${score} out of 3! ${score === 3 ? "🌟 Literary Master!" : "Keep reading!"}`;
+    result.textContent = `You scored ${score} out of 3! ${score === 3 ? "🌟 Perfect Bookworm Score!" : "Nice work — try again anytime!"}`;
   }
-  pushUserNotification(`Scored ${score}/3 on the Weekly Chapter & Literary Quiz.`);
+  pushUserNotification(`Scored ${score}/3 on the Weekly Bookworm Quiz.`);
 }
 
 function postReview(event) {
   event.preventDefault();
   const user = getCurrentUser();
+  if (!user) return;
+
   const book = document.getElementById("club-topic").value;
   const chapter = document.getElementById("chapter-num").value;
   const rating = document.getElementById("rating").value;
   const comment = document.getElementById("comment-text").value.trim();
 
-  const feed = document.getElementById("discussion-feed");
-  if (feed) {
-    const article = document.createElement("article");
-    article.className = "review-card";
-    article.innerHTML = `
-      <div class="review-meta">
-        <strong>${user.name}</strong> • <cite>${book}</cite> (Chapter ${chapter}) • <span>${rating}</span>
-      </div>
-      <blockquote><q>${comment}</q></blockquote>
-    `;
-    feed.prepend(article);
-  }
+  reviews.unshift({
+    author: user.name,
+    book: book,
+    chapter: chapter,
+    rating: rating,
+    comment: comment
+  });
 
-  pushUserNotification(`Posted a reflection on "${book}" (Chapter ${chapter}).`);
+  saveAppState();
+  renderReflections();
+  pushUserNotification(`Posted a chapter reflection on "${book}" (Ch. ${chapter}).`);
   event.target.reset();
 }
 
-// 9. PROFILE.HTML — SWITCHER, PROGRESS SLIDER & REGISTRATION
-function renderProfilePage() {
-  const nameEl = document.getElementById("profile-name");
-  if (!nameEl) return;
+function renderReflections() {
+  const feed = document.getElementById("discussion-feed");
+  if (!feed) return;
 
+  if (reviews.length === 0) {
+    feed.innerHTML = `<p class="section-sub">No reflections posted yet. Be the first to share a chapter note above!</p>`;
+    return;
+  }
+
+  feed.innerHTML = reviews.map(r => `
+    <article class="review-card">
+      <div class="review-meta">
+        <strong>${r.author}</strong> • <cite>${r.book}</cite> (Chapter ${r.chapter}) • <span>${r.rating}</span>
+      </div>
+      <blockquote><q>${r.comment}</q></blockquote>
+    </article>
+  `).join("");
+}
+
+// 10. PROFILE.HTML — MULTI-BOOK PAGE-BASED PROGRESS TRACKER
+function initProfilePage() {
+  const nameEl = document.getElementById("profile-name");
   const user = getCurrentUser();
+  if (!nameEl || !user) return;
+
   nameEl.textContent = user.name;
+  document.getElementById("profile-email-display").textContent = user.email;
   document.getElementById("profile-bio").textContent = user.bio;
-  document.getElementById("profile-genre").textContent = user.genre;
+  document.getElementById("profile-genre").textContent = `${user.personality} • ${user.genre}`;
   document.getElementById("profile-avatar").textContent = user.name.charAt(0).toUpperCase();
 
-  document.getElementById("progress-percent").textContent = `${user.progress}%`;
-  document.getElementById("reading-progress").value = user.progress;
-  document.getElementById("progress-slider").value = user.progress;
-  document.getElementById("club-badge-count").textContent = `📚 ${user.joinedClubs.length} Clubs Joined`;
+  const editVibe = document.getElementById("edit-vibe");
+  const editBio = document.getElementById("edit-bio");
+  if (editVibe) editVibe.value = user.genre;
+  if (editBio) editBio.value = user.bio;
 
-  // Sync switcher dropdown options
-  const switcher = document.getElementById("profile-switcher");
-  if (switcher) {
-    switcher.innerHTML = Object.keys(users)
-      .map(uName => `<option value="${uName}" ${uName === activeUserName ? "selected" : ""}>Active Account: ${uName}</option>`)
-      .join("");
+  // Populate book selector for adding custom books to progress tracker
+  const bookSelect = document.getElementById("track-book-select");
+  if (bookSelect) {
+    bookSelect.innerHTML = `<option value="">-- Pick a book to track --</option>` +
+      books.map(b => `<option value="${b.title}" data-pages="${b.totalPages}">${b.title} (${b.totalPages} pages)</option>`).join("");
+
+    bookSelect.onchange = function () {
+      const selectedOption = bookSelect.options[bookSelect.selectedIndex];
+      const pages = selectedOption?.getAttribute("data-pages");
+      const totalInput = document.getElementById("track-total-pages");
+      if (pages && totalInput) totalInput.value = pages;
+    };
   }
 
-  // Render joined clubs list
-  const clubsList = document.getElementById("joined-clubs-list");
-  if (clubsList) {
-    if (user.joinedClubs.length === 0) {
-      clubsList.innerHTML = `<li>You haven't joined any book clubs yet. Visit <a href="index.html">Discover</a> to pick one!</li>`;
-    } else {
-      clubsList.innerHTML = user.joinedClubs
-        .map(club => `<li><strong>${club}</strong> — <a href="club.html">Enter Club Room →</a></li>`)
-        .join("");
-    }
-  }
+  renderMultiBookProgress();
+  renderJoinedClubsOnProfile();
 }
 
-function switchUser(selectedName) {
-  if (users[selectedName]) {
-    activeUserName = selectedName;
-    saveAppState();
-    updateNavbar();
-    renderProfilePage();
-    renderNotifications();
-  }
-}
-
-function updateProgress(val) {
-  const user = getCurrentUser();
-  user.progress = Number(val);
-  document.getElementById("progress-percent").textContent = `${user.progress}%`;
-  document.getElementById("reading-progress").value = user.progress;
-  saveAppState();
-}
-
-function registerNewUser(event) {
+function updateProfileDetails(event) {
   event.preventDefault();
-  const name = document.getElementById("reg-name").value.trim();
-  const genre = document.getElementById("reg-course").value;
-  const bio = document.getElementById("reg-bio").value.trim();
+  const user = getCurrentUser();
+  if (!user) return;
 
-  users[name] = {
-    name: name,
-    bio: bio,
-    genre: genre,
-    progress: 10,
-    joinedClubs: [],
-    notifications: [`Welcome to Ink & Elsewhere, ${name}!`]
-  };
+  const newGenre = document.getElementById("edit-vibe").value;
+  const newBio = document.getElementById("edit-bio").value.trim();
+  const matchedCircle = readingCircles.find(c => c.genre === newGenre) || readingCircles[0];
 
-  activeUserName = name;
+  user.genre = newGenre;
+  user.personality = matchedCircle.personality;
+  user.recommendedClub = matchedCircle.clubName;
+  if (newBio) user.bio = newBio;
+
   saveAppState();
-  updateNavbar();
-  renderProfilePage();
-  renderNotifications();
+  initProfilePage();
+  pushUserNotification(`Updated reading personality to ${matchedCircle.personality} (${newGenre}).`);
+}
+
+function addCustomReadingTracker(event) {
+  event.preventDefault();
+  const user = getCurrentUser();
+  if (!user) return;
+
+  const title = document.getElementById("track-book-select").value;
+  const totalPages = Math.max(1, Number(document.getElementById("track-total-pages").value));
+  const pagesRead = Math.min(totalPages, Math.max(0, Number(document.getElementById("track-pages-read").value)));
+
+  user.bookProgress[title] = { pagesRead, totalPages };
+  saveAppState();
+  renderMultiBookProgress();
+  pushUserNotification(`Updated "${title}" progress to ${pagesRead}/${totalPages} pages.`);
   event.target.reset();
 }
 
-// 10. INITIALIZE ON PAGE LOAD
+function updateSingleBookPages(title, newPagesVal) {
+  const user = getCurrentUser();
+  if (!user || !user.bookProgress[title]) return;
+
+  const total = user.bookProgress[title].totalPages;
+  const clamped = Math.min(total, Math.max(0, Number(newPagesVal)));
+  user.bookProgress[title].pagesRead = clamped;
+  saveAppState();
+  renderMultiBookProgress();
+}
+
+function removeBookTracker(title) {
+  const user = getCurrentUser();
+  if (!user) return;
+  delete user.bookProgress[title];
+  saveAppState();
+  renderMultiBookProgress();
+}
+
+function renderMultiBookProgress() {
+  const container = document.getElementById("multi-book-progress-list");
+  const completedBadge = document.getElementById("books-completed-badge");
+  const user = getCurrentUser();
+  if (!container || !user) return;
+
+  const entries = Object.entries(user.bookProgress || {});
+  let finishedCount = 0;
+
+  if (entries.length === 0) {
+    container.innerHTML = `<p class="section-sub">No books being tracked yet. Pick a book above or join a reading circle on Discover!</p>`;
+    if (completedBadge) completedBadge.textContent = "🏆 0 Books Finished";
+    return;
+  }
+
+  container.innerHTML = entries.map(([title, data]) => {
+    const pct = Math.min(100, Math.round((data.pagesRead / data.totalPages) * 100));
+    if (pct === 100) finishedCount++;
+
+    return `
+      <article class="book-progress-card">
+        <div style="display:flex; justify-content:space-between; align-items:start; gap:0.5rem;">
+          <h4><cite>${title}</cite></h4>
+          <button type="button" class="clear-btn" onclick="removeBookTracker('${title.replace(/'/g, "\\'")}')">✕</button>
+        </div>
+        <p class="section-sub" style="margin-bottom:0;">
+          <strong>${pct}%</strong> completed (${data.pagesRead} of ${data.totalPages} pages)
+        </p>
+        <progress value="${pct}" max="100">${pct}%</progress>
+        <div class="inline-page-update">
+          <label class="section-sub" style="margin-bottom:0;">Current page:</label>
+          <input type="number" min="0" max="${data.totalPages}" value="${data.pagesRead}"
+            onchange="updateSingleBookPages('${title.replace(/'/g, "\\'")}', this.value)">
+          <span class="section-sub" style="margin-bottom:0;">/ ${data.totalPages}</span>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  if (completedBadge) {
+    completedBadge.textContent = `🏆 ${finishedCount} Book${finishedCount === 1 ? "" : "s"} Finished`;
+  }
+}
+
+function renderJoinedClubsOnProfile() {
+  const list = document.getElementById("joined-clubs-list");
+  const badge = document.getElementById("club-badge-count");
+  const user = getCurrentUser();
+  if (!list || !user) return;
+
+  if (badge) badge.textContent = `📚 ${user.joinedClubs.length} Circle${user.joinedClubs.length === 1 ? "" : "s"} Joined`;
+
+  if (user.joinedClubs.length === 0) {
+    list.innerHTML = `<li>You haven't joined any reading circles yet. Visit <a href="discover.html">Discover</a> to join one!</li>`;
+    return;
+  }
+
+  list.innerHTML = user.joinedClubs.map(club =>
+    `<li><strong>${club}</strong> — <a href="club.html">Open Reading Room →</a></li>`
+  ).join("");
+}
+
+// 11. BOOTSTRAP ON PAGE LOAD
 loadAppState();
 applySavedTheme();
-updateNavbar();
-renderNotifications();
-renderCatalog(books);
-renderProfilePage();
+if (enforceAuthGuard()) {
+  updateNavbar();
+  renderNotifications();
+  initDiscoverPage();
+  initClubPage();
+  initProfilePage();
+}
