@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Mitakshi">
+  <meta name="description" content="Ink & Elsewhere Reader Profile — Manage your account, track reading progress, and view personal club notifications.">
+  <title>Ink &amp; Elsewhere | My Reader Profile</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+
+  <!-- Soft Blurred Floral Background Glows -->
+  <div class="floral-aura aura-top-left" aria-hidden="true"></div>
+  <div class="floral-aura aura-top-right" aria-hidden="true"></div>
+  <div class="floral-aura aura-bottom" aria-hidden="true"></div>
+  <div class="flower-watermark flower-left" aria-hidden="true">✿</div>
+  <div class="flower-watermark flower-right" aria-hidden="true">❀</div>
+
+  <!-- Shared Floating Pill Navigation Bar -->
+  <header>
+    <nav class="nav" aria-label="Primary Navigation">
+      <div class="logo">✿ Ink &amp; <span>Elsewhere</span></div>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Discover</a></li>
+        <li><a href="club.html">Club Room</a></li>
+        <li><a href="profile.html" class="active">My Profile</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <span class="user-pill" id="active-user-badge">Reader: Tanzil</span>
+        <span class="nav-status">🔔 Clubs: <strong id="club-count">0</strong></span>
+        <button type="button" id="theme-toggle" class="theme-btn" onclick="toggleTheme()" title="Switch Light / Dark Mode">🌙</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Profile Content -->
+  <main>
+    <!-- Hero Banner & Quick Demo Account Switcher -->
+    <section class="hero">
+      <div>
+        <h1>Reader Sanctuary</h1>
+        <p>Switch between team reader profiles, track your current book progress, or register a new reader account.</p>
+      </div>
+
+      <div class="controls">
+        <label for="profile-switcher" class="visually-hidden">Switch active reader</label>
+        <select id="profile-switcher" onchange="switchUser(this.value)">
+          <option value="Tanzil">Active Account: Tanzil</option>
+          <option value="Mitakshi Pangariya">Active Account: Mitakshi Pangariya</option>
+          <option value="Deeksha Dahiya">Active Account: Deeksha Dahiya</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Two-Column Dashboard: Reader Stats & Progress (Left) + Notifications & Registration (Right) -->
+    <div class="dashboard">
+      
+      <!-- Left Column: Active Reader Card, Progress Tracker & Joined Clubs -->
+      <div>
+        <section class="card-section">
+          <div class="profile-header-box">
+            <div class="avatar-circle" id="profile-avatar">T</div>
+            <div>
+              <h2 id="profile-name">Tanzil</h2>
+              <p class="section-sub" id="profile-bio">Fantasy &amp; sci-fi enthusiast exploring whimsical worlds.</p>
+              <span class="genre-tag" id="profile-genre">Fantasy &amp; Sci-Fi</span>
+            </div>
+          </div>
+
+          <!-- Reading Progress Slider & HTML5 <progress> Bar -->
+          <div class="progress-box">
+            <h3>📖 Current Book Progress: <span id="progress-percent">35%</span></h3>
+            <progress id="reading-progress" value="35" max="100">35%</progress>
+
+            <label for="progress-slider" class="section-sub">Drag slider to update chapters read:</label>
+            <input type="range" id="progress-slider" min="0" max="100" value="35" oninput="updateProgress(this.value)">
+          </div>
+
+          <!-- Reader Milestones / Badges -->
+          <div class="badge-row">
+            <span class="reader-badge">🌿 Founding Member</span>
+            <span class="reader-badge" id="club-badge-count">📚 0 Clubs Joined</span>
+            <span class="reader-badge">✨ Ink &amp; Elsewhere Circle</span>
+          </div>
+        </section>
+
+        <!-- Active Joined Clubs List -->
+        <section class="card-section">
+          <h2>My Joined Book Clubs</h2>
+          <p class="section-sub">Clubs you enroll in on the Discover page automatically appear here.</p>
+          <ul class="activity-list" id="joined-clubs-list">
+            <li>You haven't joined any book clubs yet. Visit Discover to pick one!</li>
+          </ul>
+        </section>
+
+        <!-- Register a New Reader Account -->
+        <section class="card-section">
+          <h2>Create New Reader Account</h2>
+          <p class="section-sub">Register a fresh reader profile to test personalized clubs and notifications.</p>
+
+          <form id="register-form" class="stacked-form" onsubmit="registerNewUser(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="reg-name">Full Name *</label>
+                <input type="text" id="reg-name" placeholder="Enter your full name" minlength="3" required>
+              </div>
+              <div class="form-group">
+                <label for="reg-email">Email Address *</label>
+                <input type="email" id="reg-email" placeholder="student@email.com" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="reg-course">Favorite Genre / Track *</label>
+                <select id="reg-course" required>
+                  <option value="Fantasy">Fantasy</option>
+                  <option value="Classics">Classics</option>
+                  <option value="Sci-Fi">Sci-Fi</option>
+                  <option value="Self-Growth">Self-Growth</option>
+                  <option value="Academic / Web Tech">Academic / Web Tech</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="reg-password">Password *</label>
+                <input type="password" id="reg-password" placeholder="Minimum 6 characters" minlength="6" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="reg-bio">Short Reader Bio *</label>
+              <textarea id="reg-bio" rows="2" placeholder="Tell fellow readers what stories you love..." required></textarea>
+            </div>
+
+            <label class="checkbox-label">
+              <input type="checkbox" id="reg-terms" required>
+              I agree to the Ink &amp; Elsewhere community reading guidelines.
+            </label>
+
+            <button type="submit" class="join-btn">Register &amp; Sign In</button>
+          </form>
+        </section>
+      </div>
+
+      <!-- Right Column: Personal Activity & Notification Feed -->
+      <aside class="activity-panel">
+        <div class="panel-header">
+          <h2>Personal Alerts</h2>
+          <button type="button" class="clear-btn" onclick="clearNotifications()">Clear</button>
+        </div>
+        <ul class="activity-list" id="activity-feed">
+          <li>No notifications yet.</li>
+        </ul>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="site-footer">
+    <p><strong>Ink &amp; Elsewhere</strong> — <em>Where stories find their people.</em></p>
+    <address>
+      Built by Tanzil, Mitakshi Pangariya &amp; Deeksha Dahiya • Contact:
+      <a href="mailto:hello@inkandelsewhere.club">hello@inkandelsewhere.club</a>
+    </address>
+  </footer>
+
+</body>
+</html>
