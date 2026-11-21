@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Mitakshi Pangariya">
-  <meta name="description" content="Ink & Elsewhere — Where stories find their people. Discover collaborative book clubs, learning circles, and reading discussions.">
+  <meta name="description" content="Ink & Elsewhere — Discover your matched book club and explore 5 curated reading circles.">
   <title>Ink &amp; Elsewhere | Discover Book Clubs</title>
   <link rel="stylesheet" href="style.css">
   <script src="app.js" defer></script>
@@ -24,24 +24,129 @@
       <div class="logo">✿ Ink &amp; <span>Elsewhere</span></div>
 
       <ul class="nav-links">
-        <li><a href="index.html" class="active">Discover</a></li>
+        <li><a href="discover.html" class="active">Discover</a></li>
         <li><a href="club.html">Club Room</a></li>
         <li><a href="profile.html">My Profile</a></li>
       </ul>
 
       <div class="nav-actions">
-        <span class="user-pill" id="active-user-badge">Reader: Tanzil</span>
-        <span class="nav-status">🔔 Clubs: <strong id="club-count">0</strong></span>
+        <span class="user-pill" id="active-user-badge">Reader</span>
+        <span class="nav-status">🔔 Joined: <strong id="club-count">0</strong></span>
         <button type="button" id="theme-toggle" class="theme-btn" onclick="toggleTheme()" title="Switch Light / Dark Mode">🌙</button>
+        <button type="button" class="signout-btn" onclick="handleSignOut()">Sign Out</button>
       </div>
     </nav>
   </header>
 
   <!-- Main Content -->
   <main>
-    <!-- Hero Banner & Live Search / Genre Filter -->
+    <!-- Hero Banner & Search / Club Filter -->
     <section class="hero">
       <div>
-        <h1>Ink &amp; Elsewhere</h1>
-        <p>Where stories find their people — join a reading circle, share reflections, and grow chapter by chapter.</p>
+        <h1>Discover Your Reading Circle</h1>
+        <p>Explore 5 curated book clubs matched to your reading personality — join circles and track every book on your profile.</p>
       </div>
+
+      <div class="controls">
+        <label for="search-input" class="visually-hidden">Search books, clubs, or authors</label>
+        <input type="text" id="search-input" placeholder="Search book, author, or club..." oninput="filterCatalog()">
+
+        <label for="genre-select" class="visually-hidden">Filter by club or genre</label>
+        <select id="genre-select" onchange="filterCatalog()">
+          <option value="All">All 5 Clubs &amp; Genres</option>
+          <option value="Sci-fi & Fantasy">The Arrakis Readers (Sci-fi &amp; Fantasy)</option>
+          <option value="Classics">The Austen Society (Classics)</option>
+          <option value="Thriller & Gothic">The Midnight Readers (Thriller &amp; Gothic)</option>
+          <option value="Contemporary Fiction">The Quiet Chapters (Contemporary Fiction)</option>
+          <option value="Mythology & Historical">The Myth &amp; Margins (Mythology &amp; Historical)</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Personalized Club Match Banner (Populated by app.js based on user's sign-up vibe) -->
+    <section class="interest-banner" id="club-match-banner" aria-live="polite">
+      <div>
+        <strong>✨ Your Personality Match:</strong>
+        <span id="matched-club-text">Loading your recommended reading circle...</span>
+      </div>
+      <div class="banner-actions">
+        <button type="button" class="clear-btn" id="toggle-match-btn" onclick="toggleRecommendedFilter()">Show Only My Match</button>
+      </div>
+    </section>
+
+    <!-- 5 Featured Book Clubs Overview -->
+    <section class="card-section">
+      <h2>The 5 Reading Circles</h2>
+      <p class="section-sub">Join one or multiple clubs below — every club's reading list automatically unlocks in your Profile progress tracker.</p>
+      <div class="clubs-showcase" id="clubs-showcase"></div>
+    </section>
+
+    <!-- Admin / Member Collapsible Panel to Add New Books -->
+    <section class="admin-panel-wrapper">
+      <details class="admin-details">
+        <summary>+ Add a New Book Recommendation to a Club</summary>
+        <form id="add-book-form" class="admin-form" onsubmit="addNewBook(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="new-title">Book Title *</label>
+              <input type="text" id="new-title" placeholder="e.g., Mistborn" minlength="2" required>
+            </div>
+            <div class="form-group">
+              <label for="new-author">Author Name *</label>
+              <input type="text" id="new-author" placeholder="e.g., Brandon Sanderson" minlength="2" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="new-pages">Total Pages *</label>
+              <input type="number" id="new-pages" min="20" max="3000" placeholder="e.g., 541" required>
+            </div>
+            <div class="form-group">
+              <label for="new-genre">Assign to Club / Genre *</label>
+              <select id="new-genre" required>
+                <option value="Sci-fi & Fantasy">The Arrakis Readers — Sci-fi &amp; Fantasy</option>
+                <option value="Classics">The Austen Society — Classics</option>
+                <option value="Thriller & Gothic">The Midnight Readers — Thriller &amp; Gothic</option>
+                <option value="Contemporary Fiction">The Quiet Chapters — Contemporary Fiction</option>
+                <option value="Mythology & Historical">The Myth &amp; Margins — Mythology &amp; Historical</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="new-cover">Cover Image URL (Optional)</label>
+              <input type="text" id="new-cover" placeholder="https://...">
+            </div>
+          </div>
+
+          <button type="submit" class="join-btn">Add Book to Club Shelf</button>
+        </form>
+      </details>
+    </section>
+
+    <!-- Main Dashboard: 20-Book Shelf Grid + User-Specific Notifications -->
+    <div class="dashboard">
+      <section class="book-grid" id="book-grid" aria-label="Club Books Catalog"></section>
+
+      <aside class="activity-panel">
+        <div class="panel-header">
+          <h2>Your Alerts</h2>
+          <button type="button" class="clear-btn" onclick="clearNotifications()">Clear</button>
+        </div>
+        <ul class="activity-list" id="activity-feed">
+          <li>No alerts yet. Join a club to begin!</li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="site-footer">
+    <p><strong>Ink &amp; Elsewhere</strong> — <em>Where stories find their people.</em></p>
+    <address>
+      Built by Tanzil, Mitakshi Pangariya &amp; Deeksha Dahiya • Contact:
+      <a href="mailto:hello@inkandelsewhere.club">hello@inkandelsewhere.club</a>
+    </address>
+  </footer>
+
+</body>
+</html>
