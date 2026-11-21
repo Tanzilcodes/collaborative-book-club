@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Deeksha Dahiya">
+  <meta name="description" content="Sign in or create your reader pass for Ink & Elsewhere — Where stories find their people.">
+  <title>Ink &amp; Elsewhere | Sign In &amp; Join</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body class="auth-body">
+
+  <!-- Soft Blurred Floral Background Glows -->
+  <div class="floral-aura aura-top-left" aria-hidden="true"></div>
+  <div class="floral-aura aura-top-right" aria-hidden="true"></div>
+  <div class="floral-aura aura-bottom" aria-hidden="true"></div>
+  <div class="flower-watermark flower-left" aria-hidden="true">✿</div>
+  <div class="flower-watermark flower-right" aria-hidden="true">❀</div>
+
+  <main class="auth-wrapper">
+    <section class="auth-card">
+      <div class="auth-header">
+        <div class="auth-top-row">
+          <div class="logo">✿ Ink &amp; <span>Elsewhere</span></div>
+          <button type="button" id="theme-toggle" class="theme-btn" onclick="toggleTheme()" title="Switch Light / Dark Mode">🌙</button>
+        </div>
+        <p class="auth-tagline">Where stories find their people — sign in or create your reader pass to discover your club.</p>
+      </div>
+
+      <!-- Mode Switcher Tabs -->
+      <div class="auth-tabs" role="tablist">
+        <button type="button" id="tab-login" class="auth-tab active" onclick="switchAuthTab('login')">Sign In</button>
+        <button type="button" id="tab-register" class="auth-tab" onclick="switchAuthTab('register')">Create Account</button>
+      </div>
+
+      <!-- Validation / Status Feedback -->
+      <p id="auth-message" class="auth-message" aria-live="polite"></p>
+
+      <!-- 1. SIGN IN FORM -->
+      <form id="login-form" class="stacked-form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="login-identifier">Full Name or Email *</label>
+          <input type="text" id="login-identifier" placeholder="Enter your registered name or email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="login-password">Password *</label>
+          <input type="password" id="login-password" placeholder="Enter your password" required>
+        </div>
+
+        <button type="submit" class="join-btn">Enter Discover →</button>
+        <p class="auth-switch-hint">First time here? Switch to <strong>Create Account</strong> above to get matched with a club.</p>
+      </form>
+
+      <!-- 2. CREATE ACCOUNT FORM -->
+      <form id="register-form" class="stacked-form hidden" onsubmit="handleRegister(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="reg-name">Full Name *</label>
+            <input type="text" id="reg-name" placeholder="e.g., Aarav Sharma" minlength="2" required>
+          </div>
+          <div class="form-group">
+            <label for="reg-email">Email Address *</label>
+            <input type="email" id="reg-email" placeholder="reader@email.com" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-password">Create Strong Password *</label>
+          <input type="password" id="reg-password" placeholder="Letters + at least 1 number & 1 special character" required>
+          <small class="password-hint">Must include letters, 1 number (0–9), and 1 special character (!@#$%^&amp;*).</small>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-vibe">What describes your reading personality &amp; favorite genre? *</label>
+          <select id="reg-vibe" required>
+            <option value="">-- Choose your reading vibe --</option>
+            <option value="Sci-fi & Fantasy">Adventurous — Sci-fi &amp; Fantasy (Worlds, space &amp; epic quests)</option>
+            <option value="Classics">Intellectual — Classics (Timeless literature &amp; deep society)</option>
+            <option value="Thriller & Gothic">Mysterious — Thriller &amp; Gothic (Dark twists &amp; suspense)</option>
+            <option value="Contemporary Fiction">Introspective — Contemporary Fiction (Emotional &amp; reflective)</option>
+            <option value="Mythology & Historical">Imaginative — Mythology &amp; Historical (Legends &amp; retellings)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-bio">Short Reader Bio (Optional)</label>
+          <textarea id="reg-bio" rows="2" placeholder="Optional: share a favorite book or reading habit..."></textarea>
+        </div>
+
+        <label class="checkbox-label">
+          <input type="checkbox" id="reg-terms" required>
+          I agree to the Ink &amp; Elsewhere community guidelines.
+        </label>
+
+        <button type="submit" class="join-btn">Create Account &amp; See My Club Match →</button>
+      </form>
+    </section>
+  </main>
+
+</body>
+</html>
